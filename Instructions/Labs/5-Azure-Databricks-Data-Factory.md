@@ -38,22 +38,23 @@ In this task, you'll use a script to provision a new Azure Databricks workspace 
 
     ![Azure portal with a cloud shell pane](./images/21051.png)
 
-1. Within the Getting Started pane, select **Mount storage account**, select your **Storage account subscription** from the dropdown and click **Apply**.
+1. Within the Getting Started pane, select **Mount storage account (1)**, select your **Storage account subscription (2)** from the dropdown and click **Apply (3)**.
 
    ![](./images/21052.png)
 
-1. Within the **Mount storage account** pane, select **I want to create a storage account** and click **Next**.
+1. Within the **Mount storage account** pane, select **I want to create a storage account (1)** and click **Next (2)**.
 
    ![](./images/21053.png)
 
-
-1. If you are prompted to create storage for your Cloud Shell, ensure your subscription is selected, Please make sure you have selected your resource group **Azure-Databricks** and enter **storage<inject key="DeploymentID" enableCopy="false"/>** for the **Storage account name** and enter **fileshare1** For the **File share name**, then click on **Create**.
+1. If you are prompted to create storage for your Cloud Shell, ensure your **Subscription** is selected, Please make sure you have selected your **Resource Group** which is **Azure-Databricks (1)** , select **Region** from the drop-down **(US) East US (2)** and enter **storage<inject key="DeploymentID" enableCopy="false"/> (3)** for the **Storage account name** and enter **fileshare1 (4)** for the **File share name**, then click on **Create (5)**.
 
     ![Create storage by clicking confirm.](./images/21054.png "Create storage advanced settings")
 
-1. Wait for PowerShell terminal to start.
+1. You can see a pop up appearing **Depployment is in Progress** ,Wait for PowerShell terminal to start.
 
-1. In the PowerShell pane, enter the following commands to clone this repo:
+   ![](./images/ad-task-1-2.png)
+
+1. In the PowerShell pane, paste the following commands and Click enter to clone this repo:
 
     ```
     rm -r dp-203 -f
@@ -70,7 +71,14 @@ In this task, you'll use a script to provision a new Azure Databricks workspace 
 1. If prompted, choose which subscription you want to use (this will only happen if you have access to multiple Azure subscriptions).
 
 1. Wait for the script to complete - this typically takes around 5 minutes, but in some cases may take longer. While you are waiting, review [What is Azure Data Factory?](https://docs.microsoft.com/azure/data-factory/introduction).
+
+   ![Azure portal with a cloud shell pane](./images/25-6.png)
+   
 1. When the script has completed, close the cloud shell pane and browse to the **dp203-*xxxxxxx*** resource group that was created by the script to verify that it contains an Azure Databricks workspace and an Azure Data Factory (V2) resource (you may need to refresh the resource group view).
+
+   ![Azure portal with a cloud shell pane](./images/25-6.png)
+
+Once the Script has completed its execution, close the **cloud shell** window by clicking on the **X** which is located at the top right corner of **cloud shell**.
 
 ## Task 2: Import a notebook
 
@@ -78,11 +86,13 @@ You can create notebooks in your Azure Databricks workspace to run code written 
 
 In this task, you'll import an existing notebook that contains some Python code.
 
-1. In the Azure portal, browse to the **dp203-*xxxxxxx*** resource group that was created by the script (or the resource group containing your existing Azure Databricks workspace)
+1. In the Azure portal, in the **Search resources, services, and docs (G+/)** text box at the top of the Azure portal page, type **dp203-*xxxxxxx* (1)** resource group that was created by the script (or the resource group containing your existing Azure Databricks workspace) and select the **Resource group (2).**
+
+   ![](./images/ad-task-1-3.png)
 
 2. Select your Azure Databricks Service resource (named **databricks*xxxxxxx*** if you used the setup script to create it).
 
-    ![Create storage by clicking confirm.](./images/21055.png)
+   ![Create storage by clicking confirm.](./images/ad-task-1-4.png)
 
 3. In the **Overview** page for your workspace, use the **Launch Workspace** button to open your Azure Databricks workspace in a new browser tab; signing in if prompted.
 
@@ -90,15 +100,15 @@ In this task, you'll import an existing notebook that contains some Python code.
  
     > **Tip**: As you use the Databricks Workspace portal, various tips and notifications may be displayed. Dismiss these and follow the instructions provided to complete the tasks in this exercise.
 
-4. View the Azure Databricks workspace portal and note that the sidebar on the left side contains icons for the various tasks you can perform.
+5. View the Azure Databricks workspace portal and note that the sidebar on the left side contains icons for the various tasks you can perform.
 
-5. In the sidebar on the left, select **Workspace**. Then select the **&#8962; Home** folder.
+6. In the sidebar on the left, select **Workspace**. Then select the **&#8962; Home** folder.
 
-6. At the top of the page, in the **&#8942;** menu next to your user name, select **Import**. Then in the **Import** dialog box, select **URL** and import the notebook from `https://github.com/MicrosoftLearning/dp-203-azure-data-engineer/raw/master/Allfiles/labs/27/Process-Data.ipynb`
+7. At the top of the page, in the **&#8942;** menu next to your user name, select **Import**. Then in the **Import** dialog box, select **URL** and import the notebook from `https://github.com/MicrosoftLearning/dp-203-azure-data-engineer/raw/master/Allfiles/labs/27/Process-Data.ipynb`
 
     ![Create storage by clicking confirm.](./images/210515.png)
 
-7. Review the contents of the notebook, which include some Python code cells to:
+8. Review the contents of the notebook, which include some Python code cells to:
     - Retrieve a parameter named **folder** if it is has been passed (otherwise use a default value of *data*).
     - Download data from GitHub and save it in the specified folder in the Databricks File System (DBFS).
     - Exit the notebook, returning the path where the data was saved as an output
