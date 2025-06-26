@@ -64,9 +64,13 @@ In this task, you will enable Synapse link feature in your Cosmos DB account and
 
 1. In the [Azure portal](https://portal.azure.com), browse to the **dp203-*xxxxxxx*** resource group that was created by the setup script, and identify your **cosmos*xxxxxxxx*** Cosmos DB account.
 
+    ![](./images/m3.task1.1.png)
+
     > **Note**: In some cases, the script may have tried to create Cosmos DB accounts in multiple regions, so there may be one or more accounts in a *deleting* state. The active account should be the one with the largest number at the end of its name - for example **cosmos*xxxxxxx***.
 
 2. Open your Azure Cosmos DB account, and select the **Data Explorer** page on the left side of its blade.
+
+    ![](./images/m3.task1.2.png)
 
     > **Note**:If a **Welcome** dialog box is displayed, close it.
 
@@ -74,18 +78,25 @@ In this task, you will enable Synapse link feature in your Cosmos DB account and
 
     ![Cosmos DB Data Explorer with Enable Azure Synapse Link button highlighted](./images/l14-1.png)
 
-4. On the left side of the page, in the **Integrations** section, select the **Azure Synapse Link** page and verify that the status of the account is *Enabled*.
+    > **Note:** If prompted, click **"Enable Azure Synapse Link"** on the popup.
+
+4. On the left side of the page, in the **Integrations (1)** section, select the **Azure Synapse Link (2)** page and verify that the status of the account is *Enabled (3)*.
+
+    ![](./images/m3.task1.3.png)
 
 ### Task 2.2: Create an analytical store container
 
-1. Return to the **Data Explorer** page, and use the **new Container** button (or tile) to create a new container with the following settings:
-    - **Database id**: *(Create new)* AdventureWorks
-    - **Share throughput across containers**: Unselected
-    - **Container id**: Sales
-    - **Partition key**: /customerid
-    - **Container throughput (autoscale)**: Autoscale
-    - **Container Max RU/s**: 4000
-    - **Analytical store**: On
+1. Return to the **Data Explorer** page, and use the **new Container (1)** button (or tile) to create a new container with the following settings:
+    - **Database id**: *(Create new)* AdventureWorks **(2)**
+    - **Share throughput across containers**: Unselected **(3)**
+    - **Container id**: Sales **(4)**
+    - **Partition key**: /customerid **(5)**
+    - **Container throughput (autoscale)**: Autoscale **(6)**
+    - **Container Max RU/s**: 4000 **(7)**
+    - **Analytical store**: On **(8)**
+    - Click **OK**
+
+        ![](./images/m3.task1.4.png)
 
     > **Note**: In this scenario, **customerid** is used for partition key as it's likely to be used in many queries to retrieve customer and sales order information in a hypothetical application, it has relatively high cardinality (number of unique values), so it will allow the container to scale as the number of customers and sales orders grows. Using autoscale and setting the maximum value to 4000 RU/s is appropriate for a new application with initially low query volumes. A max value 4000 RU/s will enable the container to automatically scale between this value all the way down to 10% of this max value (400 RU/s) when not needed.
 
@@ -94,6 +105,8 @@ In this task, you will enable Synapse link feature in your Cosmos DB account and
     ![The Adventure Works, Sales, Items folder in Data Explorer](./images/l14-2.png)
 
 3. Use the **New Item** button to create a new customer item based on the following JSON. Then save the new item (some additional metadata fields will be added when you save the item).
+
+    ![](./images/m3.task1.5.png)
 
     ```json
     {
@@ -143,6 +156,7 @@ In this task, you will enable Synapse link feature in your Cosmos DB account and
         "price": 3578.27
     }
     ```
+![](./images/m3.task1.6.png)
 
 > **Note**: In reality, the analytical store would contain a much larger volume of data, written to the store by an application. These few items will be sufficient to demonstrate the principle in this exercise.
 
@@ -171,20 +185,25 @@ In this task, you will be configuring the Synapse Link in Analytics.
 
    ![](./images/labimg3.png)
 
-5. In the **+** menu, select **Connect to external data**, and then select **Azure Cosmos DB for NoSQL**.
+5. In the **+ (1)** menu, select **Connect to external data (2)**, and then select **Azure Cosmos DB for NoSQL (3)** and click **Continue (4)**
 
-    ![Adding an Azure Cosmos DB NoSQl API external data link](./images/l14-3.png)
+    ![](./images/m3.task1.7.png)
 
-6. Continue, and create a new Cosmos DB connection with the following settings and click on **Create**
-    - **Name**: AdventureWorks
-    - **Description**: AdventureWorks Cosmos DB database
-    - **Connect via integration runtime**: AutoResolveIntegrationRuntime
-    - **Authentication type**: Account key
-    - **Connection string**: *selected*
-    - **Account selection method**: From subscription
-    - **Azure subscription**: *select your Azure subscription*
-    - **Azure Cosmos DB account name**: *select your **cosmosxxxxxxx** account*
-    - **Database name**: AdventureWorks
+    ![Adding an Azure Cosmos DB NoSQl API external data link](./images/m3.task1.8.png)
+
+6. Continue, and create a new Cosmos DB connection with the following settings and click on **Create (10)**
+    - **Name**: AdventureWorks **(1)**
+    - **Description**: AdventureWorks Cosmos DB database **(2)**
+    - **Connect via integration runtime**: AutoResolveIntegrationRuntime **(3)**
+    - **Authentication type**: Account key **(4)**
+    - **Connection string**: *selected* **(5)**
+    - **Account selection method**: From subscription **(6)**
+    - **Azure subscription**: *select your Azure subscription* **(7)**
+    - **Azure Cosmos DB account name**: *select your **cosmosxxxxxxx** account* **(8)**
+    - **Database name**: AdventureWorks **(9)**
+
+      ![](./images/m3.task1.9.png)
+
 7. After creating the connection, use the **&#8635;** button at the top right of the **Data** page to refresh the view until an **Azure Cosmos DB** category is listed in the **Linked** pane.
 8. Expand the **Azure Cosmos DB** category to see the **AdventureWorks** connection you created and the **Sales** container it contains.
 
@@ -205,8 +224,13 @@ In this task, you will query data in Azure Cosmos DB using spark pool in Azure S
 
 ### Task 4.1: Query Azure Cosmos DB from a Spark pool
 
-1. In the **Data** pane, select the **Sales** container, and in its **...** menu, select **New Notebook** > **Load to DataFrame**.
-2. In the new **Notebook 1** tab that opens, in the **Attach to** list, select your Spark pool (**spark*xxxxxxx***). Then use the **&#9655; Run all** button to run all of the cells in the notebook (there's currently only one!).
+1. In the **Data** pane, select the **Sales (1)** container, and in its **...** menu, select **New Notebook (2)** > **Load to DataFrame (3)**.
+
+    ![](./images/m3.task1.10.png)
+
+2. In the new **Notebook 1** tab that opens, in the **Attach to (1)** list, select your Spark pool (**spark*xxxxxxx***). Then use the **&#9655; Run all (2)** button to run all of the cells in the notebook (there's currently only one!).
+
+    ![](./images/m3.task1.11.png)
 
    >**Note**: If you don't find the **Attach to** option, kindly collapse the **Data** pane to view the **Attach to** option next to the outline option.
    
@@ -229,7 +253,11 @@ In this task, you will query data in Azure Cosmos DB using spark pool in Azure S
 
 4. When the code has finished running, and then review the output beneath the cell in the notebook. The results should include three records; one for each of the items you added to the Cosmos DB database. Each record includes the fields you entered when you created the items as well as some of the metadata fields that were automatically generated.
 
+    ![](./images/m3.task1.12.png)
+
 5. Under the results from the previous cell, use the **+ Code** icon to add a new cell to the notebook, and then enter the following code in it:
+
+    ![](./images/m3.task1.13.png)
 
     ```python
     customer_df = df.select("customerid", "customerdetails")
@@ -355,7 +383,10 @@ In this task, you will query data in Azure Cosmos DB using spark pool in Azure S
     ```
 
 4. Switch to the browser tab containing the Azure portal (or open a new tab and sign into the Azure portal at [https://portal.azure.com](https://portal.azure.com)). Then in the **dp203-*xxxxxxx*** resource group, open your **cosmos*xxxxxxxx*** Azure Cosmos DB account.
-5. In the pane on the left, in the **Settings** section, select the **Keys** page. Then copy the **Primary Key** value to the clipboard.
+5. In the pane on the left, in the **Settings** section, select the **Keys (1)** page. Then copy the **Primary Key (2)** value to the clipboard.
+
+    ![](./images/m3.task1.14.png)
+
 6. Switch back to the browser tab containing the SQL script in Azure Synapse Studio, and paste the key into the code replacing the ***\<Enter your Azure Cosmos DB key here\>*** placeholder so that the script looks similar to this:
 
     ```sql
@@ -374,6 +405,8 @@ In this task, you will query data in Azure Cosmos DB using spark pool in Azure S
      >**Note**: If you see any error as `Credential already exists`, then please ignore it and  proceed with further steps. Review the code carefully before running.
      
 7. Use the **&#9655; Run** button to run the script, and review the results, which should include three records; one for each of the items you added to the Cosmos DB database.
+
+    ![](./images/m3.task1.15.png)
 
     Now that you have created the credential, you can use it in any query against the Cosmos DB data source.
 
@@ -432,8 +465,13 @@ In this task, you will query data in Azure Cosmos DB using spark pool in Azure S
     ```
 
 4. Return to the Synapse Studio tab and in the **SQL Script 1** tab, re-run the query. Initially, it may show the same results as before, but wait a minute or so and then re-run the query again until the results include the sale to Samir Nadoy on 2019-07-02.
+
+    ![](./images/m3.task1.16.png)
+
 5. Switch back to the **Notebook 1** tab and re-run the last cell in the Spark notebook to verify that the sale to Samir Nadoy is now included in the query results.
 
+    ![](./images/m3.task1.17.png)
+    
 ## Summary
 
 In this lab, you have performed tasks to integrate and analyze data across platforms. You configured Synapse Link in both Azure Cosmos DB and Azure Synapse Analytics, and then successfully queried Azure Cosmos DB from Azure Synapse Analytics.

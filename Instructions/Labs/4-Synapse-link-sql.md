@@ -62,6 +62,8 @@ In this task, you will work on configuring Azure SQL Database and save those con
 
 1. In the [Azure portal](https://portal.azure.com), browse to the **dp203-*xxxxxxx*** resource group that was created by the setup script, and select your **sqldb*xxxxxxxx*** Azure SQL server.
 
+    ![](./images/m4.task1.1.png)
+
     > **Note**: be careful not to mix up the Azure SQL server resource **sqldb*xxxxxxxx***) and the Azure Synapse Analytics dedicated SQL pool (**sql*xxxxxxxx***).
 
 2. In the page for your Azure SQL Server resource, in the pane on the left, in the **Security** section (near the bottom), select **Identity (1)**. Then under **System assigned managed identity**, set the **Status** option to **On (2)**. Then use the **&#128427; Save (3)** icon to save your configuration change.
@@ -145,6 +147,9 @@ In this task, You will use your Azure Synapse Workspace to configure Synapse Lin
 ### Task 4.3: Create a link connection
 
 1. In Synapse Studio, on the **Integrate** page, select the **&#65291;** icon and from drop-down menu, select **Link connection**. Then create a new linked connection with the following settings:
+
+    ![](./images/m4.task1.2.png)
+
     - **Source type**: Azure SQL database
     - **Source linked service**: Select **+ New** from the dropdown to add a new linked service with the following settings (a new tab will be opened):
         - **Name**: SqlAdventureWorksLT (1)
@@ -162,7 +167,7 @@ In this task, You will use your Azure Synapse Workspace to configure Synapse Lin
 
         *Use the **Test Connection** (13) option to ensure your connection settings are correct before continuing! Afterwards, click **Create** (14).
 
-        ![Screenshot of the Azure SQL server Networking page in the Azure portal.](./images/cl4.1.png)
+        ![Screenshot of the Azure SQL server Networking page in the Azure portal.](./images/m4.task1.3.png)
 
     - **Source tables**: Select the following tables:
         - **SalesLT.Customer**
@@ -173,12 +178,16 @@ In this task, You will use your Azure Synapse Workspace to configure Synapse Lin
 
     > **Note**: Some target tables display an error due to the use of custom data types or because data in the source table is not compatible with the default structure type of *clustered columnstore index*.
 
-    - **Target pool**: *Select your **sqlxxxxxxx** dedicated SQL pool*
-    - Click **Continue** to configure the following settings
+    - **Target pool**: *Select your **sqlxxxxxxx (1)** dedicated SQL pool*
+    - Click **Continue (2)** to configure the following settings
 
-    - **Link connection name**: sql-adventureworkslt-conn
-    - **Core count**: 4 (+ 4 Driver cores)
-    - Click **Ok**
+        ![](./images/m4.task1.4.png)
+
+    - **Link connection name**: sql-adventureworkslt-conn **(1)**
+    - **Core count**: 4 (+ 4 Driver cores) **(2)**
+    - Click **Ok (3)**
+
+        ![](./images/m4.task1.5.png)
 
 2. In the **sql-adventureworkslt-conn** page that is created, view the table mappings that have been created. You can use the **Properties** button (which looks similar to **&#128463;<sub>*</sub>**) to hide the **Properties** pane to make it easier to see eveything. 
 
@@ -193,15 +202,21 @@ In this task, You will use your Azure Synapse Workspace to configure Synapse Lin
 
 4. At the top of the **sql-adventureworkslt-conn** page that is created, use the **&#9655; Start** button to start synchronization. When prompted, select **OK** to publish and start the link connection.
 
+    ![](./images/m4.task1.6.png)
+
 5. Click on **Publish** to Publish all the pending changes.
    
-5. After starting the connection, on the **Monitor** page, select the **Link connections** tab and view the **sql-adventureworkslt-conn** connection. You can use the **&#8635; Refresh** button to update the status periodically. It may take several minutes to complete the initial snapshot copy process and start replicating - after that, all changes in the source database tables will be automatically replayed in the synchronized tables.
+5. After starting the connection, on the **Monitor (1)** page, select the **Link connections (2)** tab and view the **sql-adventureworkslt-conn (3)** connection. You can use the **&#8635; Refresh** button to update the status periodically. It may take several minutes to complete the initial snapshot copy process and start replicating - after that, all changes in the source database tables will be automatically replayed in the synchronized tables.
+
+    ![](./images/m4.task1.7.png)
 
 ### Tsk 4.4: View the replicated data
 
 1. After the status of the tables has changed to **Running**, select the **Data** page and use the  **&#8635;** icon at the top right to refresh the view.
    
-2. Select **Data** pane, click **Workspace** tab, expand **SQL databases**,  your **sql*xxxxxxx*** database, and its **Tables** folder to view the replicated tables.
+2. Select **Data (1)** pane, click **Workspace (2)** tab, expand **SQL databases (3)**,  your **sql*xxxxxxx* (4)** database, and its **Tables (5)** folder to view the replicated tables.
+
+    ![](./images/m4.task1.8.png)
    
 3. In the **...** menu for the **sql*xxxxxxx*** database, select **New SQL script** > **Empty script**. Then in the new script page, enter the following SQL code:
 
@@ -221,9 +236,13 @@ In this task, You will use your Azure Synapse Workspace to configure Synapse Lin
     ```
 
 4. Use the **&#9655; Run** button to run the script and view the results. The query is run against the replicated tables in the dedicated SQL pool and not the source database, enabling you to run analytical queries without impacting business applications.
+
+    ![](./images/m4.task1.9.png)
    
 5. When you're done, on the **Manage** page, pause the **sql*xxxxxxx*** dedicated SQL pool.
 
+    ![](./images/m4.task1.10.png)
+    
 > **Congratulations** on completing the task! Now, it's time to validate it. Here are the steps:
   - Hit the Validate button for the corresponding task. If you receive a success message, you can proceed to the next task. 
   - If not, carefully read the error message and retry the step, following the instructions in the lab guide.
