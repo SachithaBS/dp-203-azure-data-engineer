@@ -238,7 +238,9 @@ Then use the **Properties (2)** button above the **Properties** pane to hide it.
     - **Size**: nvarchar
     - **ListPrice**: money
     - **Discontinued**: bit
-    ![](./images/m1.task1.27.png)
+      
+       ![](./images/m1.task1.27.png)
+      
 8. Verify that your data flow contains two sources, as shown here:
 
     ![Screenshot of a data flow with two sources.](./images/dataflow_sources(1).png)
